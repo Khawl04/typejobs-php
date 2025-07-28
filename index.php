@@ -103,92 +103,96 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion']) && $_POST['
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TypeJobs - Iniciar Sesión</title>
     <link rel="stylesheet" href="styleindex.css">
-     
 </head>
 <body>
-    <div class="container">
-        <h1>TypeJobs</h1>
+    <div class="login-container">
+        <div class="login-header">
+            <h1>TypeJobs</h1>
+            <p>Conectamos talento con oportunidades</p>
+        </div>
         
-    <div class="form-tabs">
-        <a href="index.php?form=login" class="tab-button <?php echo $formularioActivo === 'login' ? 'active' : ''; ?>">Iniciar sesión</a>
-        <a href="index.php?form=registro" class="tab-button <?php echo $formularioActivo === 'registro' ? 'active' : ''; ?>">Registrarse</a>
-    </div>
+        <div class="form-tabs">
+            <a href="index.php?form=login" class="tab-button <?php echo $formularioActivo === 'login' ? 'active' : ''; ?>">Iniciar sesión</a>
+            <a href="index.php?form=registro" class="tab-button <?php echo $formularioActivo === 'registro' ? 'active' : ''; ?>">Registrarse</a>
+        </div>
         
-        <?php if (!empty($mensaje)): ?>
-            <div class="mensaje <?php echo $tipoMensaje; ?>">
-                <?php echo htmlspecialchars($mensaje); ?>
-            </div>
-        <?php endif; ?>
-        
-        <?php if ($formularioActivo === 'login'): ?>
-            <form method="POST">
-                <input type="hidden" name="accion" value="login">
-                
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required>
+        <div class="login-form">
+            <?php if (!empty($mensaje)): ?>
+                <div class="mensaje <?php echo $tipoMensaje; ?>">
+                    <?php echo htmlspecialchars($mensaje); ?>
                 </div>
-                
-                <div class="form-group">
-                    <label for="contrasena">Contraseña</label>
-                    <input type="password" id="contrasena" name="contrasena" required>
-                </div>
-                
-                <button type="submit" class="login-btn">Iniciar sesión</button>
-            </form>
-        <?php endif; ?>
-        
-        <?php if ($formularioActivo === 'registro'): ?>
-            <form method="POST">
-                <input type="hidden" name="accion" value="registro">
-                
-                <div class="form-group">
-                    <label for="nombre">Nombre</label>
-                    <input type="text" id="nombre" name="nombre" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="apellido">Apellido</label>
-                    <input type="text" id="apellido" name="apellido" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="nomusuario">Nombre Usuario</label>
-                    <input type="text" id="nomusuario" name="nomusuario" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="telefono">Teléfono</label>
-                    <input type="tel" id="telefono" name="telefono">
-                </div>
-                
-                <div class="form-group">
-                    <label for="tipo">Tipo de cuenta</label>
-                    <select id="tipo" name="tipo" required>
-                        <option value="">Seleccionar</option>
-                        <option value="CLIENTE">Cliente</option>
-                        <option value="PROVEEDOR">Proveedor</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="contrasena">Contraseña</label>
-                    <input type="password" id="contrasena" name="contrasena" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="confirmarcontrasena">Confirmar Contraseña</label>
-                    <input type="password" id="confirmarcontrasena" name="confirmarcontrasena" required>
-                </div>
-                
-                <button type="submit" class="login-btn">Crear Cuenta</button>
-            </form>
-        <?php endif; ?>
+            <?php endif; ?>
+            
+            <?php if ($formularioActivo === 'login'): ?>
+                <form method="POST">
+                    <input type="hidden" name="accion" value="login">
+                    
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="contrasena">Contraseña</label>
+                        <input type="password" id="contrasena" name="contrasena" required>
+                    </div>
+                    
+                    <button type="submit" class="login-btn">Iniciar sesión</button>
+                </form>
+            <?php endif; ?>
+            
+            <?php if ($formularioActivo === 'registro'): ?>
+                <form method="POST">
+                    <input type="hidden" name="accion" value="registro">
+                    
+                    <div class="form-group">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" id="nombre" name="nombre" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="apellido">Apellido</label>
+                        <input type="text" id="apellido" name="apellido" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="nomusuario">Nombre Usuario</label>
+                        <input type="text" id="nomusuario" name="nomusuario" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="telefono">Teléfono</label>
+                        <input type="tel" id="telefono" name="telefono">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="tipo">Tipo de cuenta</label>
+                        <select id="tipo" name="tipo" required>
+                            <option value="">Seleccionar</option>
+                            <option value="CLIENTE">Cliente</option>
+                            <option value="PROVEEDOR">Proveedor</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="contrasena">Contraseña</label>
+                        <input type="password" id="contrasena" name="contrasena" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirmarcontrasena">Confirmar Contraseña</label>
+                        <input type="password" id="confirmarcontrasena" name="confirmarcontrasena" required>
+                    </div>
+                    
+                    <button type="submit" class="login-btn">Crear Cuenta</button>
+                </form>
+            <?php endif; ?>
+        </div>
     </div>
 </body>
 </html>
