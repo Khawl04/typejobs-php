@@ -4,44 +4,42 @@ require_once 'usuario.php';
 
 class Auth {
 
-    public static function iniciarSesion($email, $contrasena) {
-        $email = trim($email);
-        $contrasena = trim($contrasena);
+    public static function iniciarSesion($emailUsuario, $contrasena) {
+    $emailUsuario = trim($emailUsuario);
+    $contrasena = trim($contrasena);
 
-        if (empty($email) || empty($contrasena)) {
-            return false;
-        }
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            return false;
-        }
-
-        $claseConexion = new ClaseConexion();
-        $conexion = $claseConexion->getConexion();
-        $query = "SELECT * FROM usuarios WHERE email = ? AND contrasena = ?";
-        $stmt = $conexion->prepare($query);
-        $stmt->bind_param("ss", $email, $contrasena);
-        $stmt->execute();
-        $resultado = $stmt->get_result();
-
-        if ($resultado->num_rows > 0) {
-            $datosUsuario = $resultado->fetch_assoc();
-            $usuario = new Usuario($datosUsuario);
-            if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-            }
-            $_SESSION['logueado'] = true;
-            $_SESSION['usuario_id'] = $usuario->id;
-            $_SESSION['usuario_email'] = $usuario->email;
-            $_SESSION['usuario_nombre'] = $usuario->nomusuario;
-            $_SESSION['usuario_tipo'] = $usuario->tipo;
-            $stmt->close();
-            $conexion->close();
-            return $usuario;
-        }
-        $stmt->close();
-        $conexion->close();
+    if (empty($emailUsuario) || empty($contrasena)) {
         return false;
     }
+
+    $claseConexion = new ClaseConexion();
+    $conexion = $claseConexion->getConexion();
+    
+    $query = "SELECT * FROM usuarios WHERE (email = ? OR nomusuario = ?) AND contrasena = ?";
+    $stmt = $conexion->prepare($query);
+    $stmt->bind_param("sss", $emailUsuario, $emailUsuario, $contrasena);
+    $stmt->execute();
+    $resultado = $stmt->get_result();
+
+    if ($resultado->num_rows > 0) {
+        $datosUsuario = $resultado->fetch_assoc();
+        $usuario = new Usuario($datosUsuario);
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+        $_SESSION['logueado'] = true;
+        $_SESSION['usuario_id'] = $usuario->id;
+        $_SESSION['usuario_email'] = $usuario->email;
+        $_SESSION['usuario_nombre'] = $usuario->nomusuario;
+        $_SESSION['usuario_tipo'] = $usuario->tipo;
+        $stmt->close();
+        $conexion->close();
+        return $usuario;
+    }
+    $stmt->close();
+    $conexion->close();
+    return false;
+}
 
     public static function registrarUsuario($datos) {
         $nombre = trim($datos['nombre']);
@@ -52,16 +50,20 @@ class Auth {
         $contrasena = trim($datos['contrasena']);
         $tipo = trim($datos['tipo']);
 
-        if (empty($nombre) || empty($apellido) || empty($email) || empty($contrasena) || empty($tipo)) {
+        if (empty($nombre) || empty($apellido) || empty($nomusuario) ||empty($email) || empty($contrasena) || empty($tipo)) {
             return false;
         }
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return false;
+        }
+        if (strlen($nomusuario) < 3 || strlen($nomusuario) > 20) {
             return false;
         }
         if (strlen($contrasena) < 6) {
             return false;
         }
 
+        //verificar si el email ya existe
         $claseConexion = new ClaseConexion();
         $conexion = $claseConexion->getConexion();
         $query = "SELECT id_usuario FROM usuarios WHERE email = ?";
@@ -78,27 +80,45 @@ class Auth {
 
         $stmt->close();
 
-       // Validar longitud del teléfono (máximo 13 caracteres)
-if (!empty($telefono) && strlen($telefono) > 13) {
-    $conexion->close();
-    return 'telefono_invalido';
-}
+        //verificar si el nombre de usuario ya existe
+        $claseConexion = new ClaseConexion();
+        $conexion = $claseConexion->getConexion();
+        $query = "SELECT id_usuario FROM usuarios WHERE nomusuario = ?";
+        $stmt = $conexion->prepare($query);
+        $stmt->bind_param("s", $nomusuario);
+        $stmt->execute();
+        $resultado = $stmt->get_result();
 
-// Verificar si el teléfono ya existe (solo si no está vacío)
-if (!empty($telefono)) {
-    $query = "SELECT id_usuario FROM usuarios WHERE telefono = ?";
-    $stmt = $conexion->prepare($query);
-    $stmt->bind_param("s", $telefono);
-    $stmt->execute();
-    $resultado = $stmt->get_result();
+        if ($resultado->num_rows > 0) {
+            $stmt->close();
+            $conexion->close();
+            return false;
+        }
 
-    if ($resultado->num_rows > 0) {
         $stmt->close();
-        $conexion->close();
-        return 'telefono_duplicado';
-    }
-    $stmt->close();
-}
+
+       // Validar longitud del teléfono (máximo 13 caracteres)
+        if (!empty($telefono) && strlen($telefono) > 13) {
+             $conexion->close();
+             return 'telefono_invalido';
+        }
+
+/       // Verificar si el teléfono ya existe (solo si no está vacío)
+        if (!empty($telefono)) {
+            $query = "SELECT id_usuario FROM usuarios WHERE telefono = ?";
+            $stmt = $conexion->prepare($query);
+            $stmt->bind_param("s", $telefono);
+            $stmt->execute();
+            $resultado = $stmt->get_result();
+
+        if ($resultado->num_rows > 0) {
+            $stmt->close();
+            $conexion->close();
+            return 'telefono_duplicado';
+        }
+
+        $stmt->close();
+        }   
           
     
         $query = "INSERT INTO usuarios (nombre, apellido, nomusuario, email, telefono, contrasena, tipo, fecha_registro) VALUES (?, ?, ?, ?, ?, ?, ?, NOW())";

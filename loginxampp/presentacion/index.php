@@ -21,27 +21,24 @@ if (isset($_GET['form']) && $_GET['form'] === 'registro') {
 
 // PROCESAR FORMULARIO DE LOGIN
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion']) && $_POST['accion'] === 'login') {
-    $email = trim($_POST['email'] ?? '');
+    $emailUsuario = trim($_POST['emailUsuario'] ?? '');
     $contrasena = $_POST['contrasena'] ?? '';
 
     // Validaciones basicas de presentacion
-    if (empty($email) || empty($contrasena)) {
+    if (empty($emailUsuario) || empty($contrasena)) {
         $mensaje = 'Por favor completa todos los campos';
         $tipoMensaje = 'error';
-    } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $mensaje = 'El email no es valido';
-        $tipoMensaje = 'error';
     } else {
-        // Enviar datos a la capa de negocio
-        $usuario = Auth::iniciarSesion($email, $contrasena);
-        
+        // Enviar datos
+        $usuario = Auth::iniciarSesion($emailUsuario, $contrasena);
+
         if ($usuario) {
             // Redirigir al panel si login exitoso
             header('Location: panel.php');
             exit;
         } else {
             // Mostrar error si login fallido
-            $mensaje = 'Email o contraseña incorrectos';
+            $mensaje = 'Correo/nombre de usuario o contraseña incorrectos';
             $tipoMensaje = 'error';
         }
     }
@@ -146,10 +143,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion']) && $_POST['
                     <input type="hidden" name="accion" value="login">
                     
                     <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required>
+                        <label for="emailUsuario">Email o Nombre de Usuario</label>
+                        <input type="text" id="emailUsuario" name="emailUsuario" required>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="contrasena">Contraseña</label>
                         <input type="password" id="contrasena" name="contrasena" required>
