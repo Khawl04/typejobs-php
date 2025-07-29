@@ -1,0 +1,146 @@
+      * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: white;
+            border: 2px solid #333;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .login-header {
+            background: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            margin: -20px -20px 20px -20px;
+        }
+
+        .form-tabs {
+            display: flex;
+            margin-bottom: 20px;
+        }
+
+        .tab-button {
+            flex: 1;
+            padding: 15px;
+            background: #f0f0f0;
+            border: 1px solid #ccc;
+            text-decoration: none;
+            color: black;
+            text-align: center;
+        }
+
+        .tab-button.active {
+            background: #333;
+            color: white;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input, 
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: #333;
+            color: white;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .login-btn:hover {
+            background: #555;
+        }
+
+        .mensaje {
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 2px solid;
+        }
+
+        .mensaje.error {
+            background: #ffe6e6;
+            color: #cc0000;
+            border-color: #cc0000;
+        }
+
+        .mensaje.success {
+            background: #e6ffe6;
+            color: #006600;
+            border-color: #006600;
+        }
+
+        .form-row-options {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .forgot-link {
+            color: #333;
+            text-decoration: underline;
+        }
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+    
+    .login-header {
+        padding: 20px 15px;
+    }
+    
+    .login-header h1 {
+        font-size: 24px;
+    }
+    
+    .tab-button {
+        padding: 15px 10px;
+        font-size: 14px;
+    }
+    
+    .login-form {
+        padding: 20px;
+    }
+    
+    .form-row-options {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    
+    .forgot-password {
+        align-self: flex-end;
+    }
+}
