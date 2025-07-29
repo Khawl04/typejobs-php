@@ -64,7 +64,7 @@ if (isset($_GET['accion']) && $_GET['accion'] === 'logout') {
                         <span><?php echo htmlspecialchars($usuario->id); ?></span>
                     </div>
                     <div class="user-item">
-                        <strong>Nombre:</strong>
+                        <strong>Nombre completo:</strong>
                         <span><?php echo htmlspecialchars($usuario->nombre . ' ' . $usuario->apellido); ?></span>
                     </div>
                     <div class="user-item">

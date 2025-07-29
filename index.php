@@ -103,6 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion']) && $_POST['
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TypeJobs - Iniciar Sesión</title>
     <link rel="stylesheet" href="styleindex.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
     <div class="login-container">
@@ -137,6 +138,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion']) && $_POST['
                         <input type="password" id="contrasena" name="contrasena" required>
                     </div>
                     
+                    <div class="form-row-options">
+                        <div class="remember-me">
+                            <label class="checkbox-container">
+                                <input type="checkbox" name="recordarme" id="recordarme">
+                                <span class="checkmark"></span>Recuérdame</label>
+                        </div>
+                        
+                        <div class="forgot-password">
+                            <a href="#" class="forgot-link" onclick="alert('Próximamente')">¿Olvidaste tu contraseña?</a>
+                        </div>
+                    </div>
+                    
                     <button type="submit" class="login-btn">Iniciar sesión</button>
                 </form>
             <?php endif; ?>
@@ -156,7 +169,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion']) && $_POST['
                     </div>
                     
                     <div class="form-group">
-                        <label for="nomusuario">Nombre Usuario</label>
+                        <label for="nomusuario">Nombre de usuario</label>
                         <input type="text" id="nomusuario" name="nomusuario" required>
                     </div>
                     
@@ -185,7 +198,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion']) && $_POST['
                     </div>
                     
                     <div class="form-group">
-                        <label for="confirmarcontrasena">Confirmar Contraseña</label>
+                        <label for="confirmarcontrasena">Confirmar contraseña</label>
                         <input type="password" id="confirmarcontrasena" name="confirmarcontrasena" required>
                     </div>
                     
@@ -195,4 +208,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion']) && $_POST['
         </div>
     </div>
 </body>
-</html>
+</html>    
